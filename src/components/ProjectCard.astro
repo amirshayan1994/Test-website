@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  href?: string;
+  year: string;
+}
+
+const { title, description, tags, href = '#', year } = Astro.props;
+---
+
+
+  href={href}
+  class="group block rounded-2xl border border-ink-800 bg-ink-900/50 p-6 transition-all hover:border-accent/40 hover:bg-ink-900"
+>
+  <div class="mb-3 flex items-baseline justify-between gap-4">
+    <h3 class="text-lg font-bold transition-colors group-hover:text-accent">{title}</h3>
+    <span class="shrink-0 text-xs text-ink-600">{year}</span>
+  </div>
+
+  <p class="mb-5 text-sm leading-7 text-ink-400">{description}</p>
+
+  <ul class="flex flex-wrap gap-2">
+    {
+      tags.map((tag) => (
+        <li class="rounded-md bg-ink-800 px-2.5 py-1 text-xs text-ink-200">{tag}</li>
+      ))
+    }
+  </ul>
+</a>
