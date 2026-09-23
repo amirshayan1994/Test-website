@@ -1,0 +1,43 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'خانه' },
+  { href: '/blog', label: 'نوشته‌ها' },
+  { href: '/#projects', label: 'نمونه‌کارها' },
+  { href: '/#contact', label: 'تماس' },
+];
+
+const isActive = (href: string) => {
+  if (href === '/') return path === '/';
+  if (href.startsWith('/#')) return false;
+  return path.startsWith(href);
+};
+---
+
+<header class="sticky top-0 z-50 border-b border-ink-800/60 bg-ink-950/80 backdrop-blur-md">
+  <nav class="mx-auto flex max-w-4xl items-center justify-between px-6 py-4">
+    <a href="/" class="group flex items-center gap-2 text-lg font-bold tracking-tight">
+      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-bold text-ink-950 transition-transform group-hover:-rotate-6">ت</span>
+      <span>تانین</span>
+    </a>
+    <ul class="flex items-center gap-1 text-sm">
+      {
+        links.map((link) => (
+          <li>
+            
+              href={link.href}
+              class:list={[
+                'rounded-lg px-3 py-2 transition-colors',
+                isActive(link.href)
+                  ? 'bg-ink-800 text-ink-50'
+                  : 'text-ink-400 hover:bg-ink-900 hover:text-ink-50',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
