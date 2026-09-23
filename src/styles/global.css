@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --color-ink-50: #f6f6f7;
+  --color-ink-200: #d6d7db;
+  --color-ink-400: #8b8d97;
+  --color-ink-600: #4a4c57;
+  --color-ink-800: #26272f;
+  --color-ink-900: #16171c;
+  --color-ink-950: #0d0e12;
+  --color-accent: #e0a458;
+  --color-accent-soft: #f0c88a;
+}
+
+html { scroll-behavior: smooth; background-color: var(--color-ink-950); color: var(--color-ink-50); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+::selection { background-color: var(--color-accent); color: var(--color-ink-950); }
+
+.prose-fa { line-height: 2.1; }
+.prose-fa h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--color-ink-50); }
+.prose-fa h3 { font-size: 1.2rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--color-ink-50); }
+.prose-fa p { margin-bottom: 1.25rem; color: var(--color-ink-200); }
+.prose-fa ul, .prose-fa ol { margin-bottom: 1.25rem; padding-inline-start: 1.5rem; color: var(--color-ink-200); }
+.prose-fa ul { list-style: disc; }
+.prose-fa ol { list-style: decimal; }
+.prose-fa li { margin-bottom: 0.5rem; }
+.prose-fa a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
+.prose-fa strong { color: var(--color-ink-50); font-weight: 700; }
+.prose-fa blockquote { border-inline-start: 3px solid var(--color-accent); padding-inline-start: 1.25rem; margin: 1.5rem 0; color: var(--color-ink-400); }
+.prose-fa code { background-color: var(--color-ink-800); padding: 0.15rem 0.4rem; border-radius: 0.3rem; font-size: 0.9em; direction: ltr; display: inline-block; }
+.prose-fa pre { background-color: var(--color-ink-900) !important; border: 1px solid var(--color-ink-800); padding: 1.25rem; border-radius: 0.75rem; overflow-x: auto; direction: ltr; text-align: left; margin-bottom: 1.5rem; }
+.prose-fa pre code { background: none; padding: 0; }
