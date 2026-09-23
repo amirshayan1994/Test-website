@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const dateFmt = new Intl.DateTimeFormat('fa-IR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title="نوشته‌ها — تانین" description="یادداشت‌هایی درباره توسعه وب و طراحی.">
+  <section class="mx-auto max-w-4xl px-6 pt-20 pb-10">
+    <h1 class="mb-4 text-4xl font-bold">نوشته‌ها</h1>
+    <p class="max-w-xl leading-8 text-ink-400">چیزهایی که یاد می‌گیرم و به‌دردخور به نظر می‌رسند را اینجا می‌نویسم.</p>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 pb-16">
+    <ul class="flex flex-col gap-4">
+      {
+        posts.map((post) => (
+          <li>
+            
+              href={`/blog/${post.id}/`}
+              class="group block rounded-2xl border border-ink-800 bg-ink-900/50 p-6 transition-all hover:border-accent/40 hover:bg-ink-900"
+            >
+              <div class="mb-2 flex items-baseline justify-between gap-4">
+                <h2 class="text-lg font-bold transition-colors group-hover:text-accent">{post.data.title}</h2>
+                <time datetime={post.data.pubDate.toISOString()} class="shrink-0 text-xs text-ink-600">
+                  {dateFmt.format(post.data.pubDate)}
+                </time>
+              </div>
+              <p class="mb-4 text-sm leading-7 text-ink-400">{post.data.description}</p>
+              <ul class="flex flex-wrap gap-2">
+                {post.data.tags.map((tag) => (
+                  <li class="rounded-md bg-ink-800 px-2.5 py-1 text-xs text-ink-200">{tag}</li>
+                ))}
+              </ul>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
