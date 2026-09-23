@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const dateFmt = new Intl.DateTimeFormat('fa-IR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const projects = [
+  {
+    title: 'سامانه مدیریت سفارش',
+    description: 'پنل داخلی برای پیگیری سفارش‌ها و موجودی انبار با گزارش‌گیری لحظه‌ای و نقش‌های کاربری مجزا.',
+    tags: ['React', 'Node.js', 'PostgreSQL'],
+    year: '۱۴۴',
+  },
+  {
+    title: 'وب‌سایت فروشگاهی آرتا',
+    description: 'طراحی و پیاده‌سازی فروشگاه اینترنتی با تمرکز بر سرعت بارگذاری و تجربه خرید موبایل.',
+    tags: ['Astro', 'Tailwind', 'Stripe'],
+    year: '۱۴۰۳',
+  },
+  {
+    title: 'داشبورد تحلیل داده',
+    description: 'نمایش بصری شاخص‌های کلیدی کسب‌وکار با نمودارهای تعاملی و خروجی گزارش اکسل.',
+    tags: ['TypeScript', 'D3.js', 'FastAPI'],
+    year: '۱۴۰۳',
+  },
+  {
+    title: 'اپلیکیشن یادداشت‌برداری',
+    description: 'ابزار سبک برای نگه‌داری یادداشت‌ها با جست‌وجوی سریع و همگام‌سازی آفلاین.',
+    tags: ['PWA', 'IndexedDB'],
+    year: '۱۴۰۲',
+  },
+];
+
+const skills = [
+  'JavaScript / TypeScript',
+  'React و Astro',
+  'Node.js',
+  'طراحی رابط کاربری',
+  'PostgreSQL',
+  'Git و CI/CD',
+];
+---
+
+<BaseLayout
+  title="تانین — توسعه‌دهنده وب"
+  description="پورتفولیو و یادداشت‌های شخصی درباره توسعه وب، طراحی رابط کاربری و تجربه‌های فنی."
+>
+  <section class="mx-auto max-w-4xl px-6 pt-20 pb-16">
+    <p class="mb-4 text-sm text-accent">سلام 👋</p>
+    <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl sm:leading-tight">
+      من تانین هستم،<br />
+      <span class="text-ink-400">توسعه‌دهنده وب.</span>
+    </h1>
+    <p class="max-w-2xl text-lg leading-9 text-ink-200">
+      روی ساخت محصولات وب سریع و قابل‌اتکا کار می‌کنم — از طراحی رابط کاربری تا
+      پیاده‌سازی سمت سرور. اینجا نمونه‌ای از کارهایم و یادداشت‌هایی که در مسیر
+      یادگیری می‌نویسم را می‌بینی.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="#projects" class="rounded-xl bg-accent px-5 py-3 text-sm font-bold text-ink-950 transition-colors hover:bg-accent-soft">
+        دیدن نمونه‌کارها
+      </a>
+      <a href="/blog" class="rounded-xl border border-ink-800 px-5 py-3 text-sm font-bold text-ink-200 transition-colors hover:border-ink-600 hover:text-ink-50">
+        خواندن نوشته‌ها
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 pb-16">
+    <ul class="flex flex-wrap gap-2">
+      {
+        skills.map((skill) => (
+          <li class="rounded-lg border border-ink-800 bg-ink-900/50 px-3 py-2 text-sm text-ink-400">{skill}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section id="projects" class="mx-auto max-w-4xl scroll-mt-20 px-6 py-16">
+    <div class="mb-8 flex items-baseline justify-between">
+      <h2 class="text-2xl font-bold">نمونه‌کارها</h2>
+      <span class="text-sm text-ink-600">{projects.length} پروژه</span>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      {projects.map((p) => <ProjectCard {...p} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-4xl px-6 py-16">
+    <div class="mb-8 flex items-baseline justify-between">
+      <h2 class="text-2xl font-bold">آخرین نوشته‌ها</h2>
+      <a href="/blog" class="text-sm text-accent transition-opacity hover:opacity-70">همه نوشته‌ها ←</a>
+    </div>
+    <ul class="divide-y divide-ink-800/60">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/blog/${post.id}/`} class="group flex flex-col gap-1 py-5 transition-opacity sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+              <span class="font-medium transition-colors group-hover:text-accent">{post.data.title}</span>
+              <time datetime={post.data.pubDate.toISOString()} class="shrink-0 text-sm text-ink-600">
+                {dateFmt.format(post.data.pubDate)}
+              </time>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section id="contact" class="mx-auto max-w-4xl scroll-mt-20 px-6 py-16">
+    <div class="rounded-2xl border border-ink-800 bg-ink-900/50 p-8 sm:p-10">
+      <h2 class="mb-3 text-2xl font-bold">بیا با هم کار کنیم</h2>
+      <p class="mb-6 max-w-lg leading-8 text-ink-400">
+        اگر پروژه‌ای داری یا سؤالی هست، خوشحال می‌شوم بشنوم. معمولاً ظرف یکی دو روز جواب می‌دهم.
+      </p>
+      <a href="mailto:hello@example.com" class="inline-block rounded-xl bg-accent px-5 py-3 text-sm font-bold text-ink-950 transition-colors hover:bg-accent-soft">
+        hello@example.com
+      </a>
+    </div>
+  </section>
+</BaseLayout>
