@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = new Intl.DateTimeFormat('fa-IR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${post.data.title} — تانین`} description={post.data.description}>
+  <article class="mx-auto max-w-2xl px-6 pt-16 pb-10">
+    <a href="/blog" class="mb-8 inline-block text-sm text-ink-600 transition-colors hover:text-accent">
+      → بازگشت به نوشته‌ها
+    </a>
+
+    <header class="mb-10 border-b border-ink-800/60 pb-8">
+      <h1 class="mb-4 text-3xl leading-snug font-bold sm:text-4xl sm:leading-snug">{post.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-4 text-sm text-ink-600">
+        <time datetime={post.data.pubDate.toISOString()}>{dateFmt.format(post.data.pubDate)}</time>
+        <ul class="flex flex-wrap gap-2">
+          {
+            post.data.tags.map((tag) => (
+              <li class="rounded-md bg-ink-800 px-2.5 py-1 text-xs text-ink-200">{tag}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </header>
+
+    <div class="prose-fa">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
